@@ -65,7 +65,7 @@ def get_predicted_series(result, num_samples, q1, q2):
 
 
 def predict_single_timeseries(start, target, dynamic_feat, predictor,
-                              quantiles=[0.2, 0.9],
+                              quantiles=["0.4", "0.9"],
                               num_samples=400,
                               output_types=["mean", "quantiles", "samples"]):
     """
