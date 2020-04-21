@@ -143,4 +143,3 @@ cython_debug/
 /.vscode
 
 play_*
-notebooks/
