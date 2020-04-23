@@ -1,6 +1,7 @@
 """
 """
 
+import pandas as pd
 from dateutil.parser import parse
 
 import holidays
@@ -36,6 +37,26 @@ def encode_day_of_year_df(df_row, dt_col):
     dt = parse(dt_text)
     day_of_year = dt.timetuple().tm_yday
     return day_of_year
+
+
+def encode_week_number(df_row, dt_col):
+    """
+    """
+    dt_text = df_row[dt_col]
+    dt = parse(dt_text)
+    week = dt.date().isocalendar()[1]
+    return week
+
+
+def encode_freq_index(df_row, dt_col, periods=289, freq='5min'):
+    """
+    """
+    dt_text = df_row[dt_col]
+    day_text = dt_text.split()[0]
+    idxes_time = pd.date_range(day_text, periods=periods, freq=freq)
+    idxes_time = [str(i) for i in idxes_time]
+    period_id = idxes_time.index(dt_text)
+    return period_id    
 
 
 def encode_season_au_df(df_row, dt_col):
@@ -122,3 +143,24 @@ def add_time_df(df, dt_col):
                                  axis=1)
     return df
 
+
+def add_week_df(df, dt_col):
+    """
+    """
+    df.loc[:, 'week'] = df.apply(lambda row:
+                                 encode_week_number(row,
+                                                dt_col),
+                                 axis=1)
+    return df
+
+
+def add_freq_index(df, dt_col, periods=289, freq='5min'):
+    """
+    """
+    df.loc[:, 'period'] = df.apply(lambda row:
+                                   encode_freq_index(row,
+                                                     dt_col, 
+                                                     periods=periods,
+                                                     freq=freq),
+                                   axis=1)
+    return df
