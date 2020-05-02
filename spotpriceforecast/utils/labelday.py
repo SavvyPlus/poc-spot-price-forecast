@@ -98,3 +98,68 @@ def encode_time_df(df_row, dt_col):
     if h > 21:
         t = 4
     return t
+
+
+def add_daytype_to_df(df, dt_col, country='AU', state=None):
+    """
+    """
+    df.loc[:, 'daytype'] = df.apply(lambda row:
+                                    encode_day_type_df(row,
+                                                       dt_col,
+                                                       country,
+                                                       state),
+                                    axis=1)
+    return df
+
+
+def add_day_of_year_df(df, dt_col):
+    """
+    """
+    df.loc[:, 'dayofyear'] = df.apply(lambda row:
+                                      encode_day_of_year_df(row,
+                                                            dt_col),
+                                      axis=1)
+    return df
+
+
+def add_season_au_df(df, dt_col):
+    """
+    """
+    df.loc[:, 'season'] = df.apply(lambda row:
+                                   encode_season_au_df(row,
+                                                       dt_col),
+                                   axis=1)
+    return df
+
+
+def add_time_df(df, dt_col):
+    """
+    """
+    df.loc[:, 'time'] = df.apply(lambda row:
+                                 encode_time_df(row,
+                                                dt_col),
+                                 axis=1)
+    return df
+
+
+def add_week_df(df, dt_col):
+    """
+    """
+    df.loc[:, 'week'] = df.apply(lambda row:
+                                 encode_week_number(row,
+                                                    dt_col),
+                                 axis=1)
+    return df
+
+
+def add_freq_index(df, dt_col, periods=289, freq='5min'):
+    """
+    """
+    df.loc[:, 'period'] = df.apply(lambda row:
+                                   encode_freq_index(row,
+                                                     dt_col,
+                                                     periods=periods,
+                                                     freq=freq),
+                                   axis=1)
+    return df
+    

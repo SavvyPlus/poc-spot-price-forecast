@@ -9,6 +9,9 @@ class Config(object):
 
 
 class DevConfig(Config):
+    prediction_length = 140000
+    test_data_length = 20000
+    train_data_length = 280000
     pass
 
 
